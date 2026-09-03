@@ -1,0 +1,25 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Sale {
+  id          String   @id
+  vehicleId   String
+  brand       String
+  model       String
+  year        Int
+  color       String
+  price       Decimal  @db.Decimal(12, 2)
+  buyerCpf    String
+  soldAt      DateTime
+  paymentCode String   @unique
+  paymentStatus String   @default("PENDING")
+  createdAt   DateTime @default(now())
+
+  @@index([soldAt, price])
+}

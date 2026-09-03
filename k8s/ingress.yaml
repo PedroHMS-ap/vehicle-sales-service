@@ -1,0 +1,13 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: vehicle-sales-ingress
+  namespace: vehicle-platform
+spec:
+  rules:
+    - host: sales.vehicle.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend: { service: { name: vehicle-sales-service, port: { number: 80 } } }

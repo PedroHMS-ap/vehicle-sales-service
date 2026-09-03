@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vehicle-sales-service
+  namespace: vehicle-platform
+spec:
+  replicas: 2
+  selector:
+    matchLabels: { app: vehicle-sales-service }
+  template:
+    metadata: { labels: { app: vehicle-sales-service } }
+    spec:
+      containers:
+        - name: api
+          image: ghcr.io/pedrohms-ap/vehicle-sales-service:latest
+          ports: [{ containerPort: 3002 }]
+          readinessProbe: { httpGet: { path: /health, port: 3002 }, initialDelaySeconds: 5, periodSeconds: 10 }
+          livenessProbe: { httpGet: { path: /health, port: 3002 }, initialDelaySeconds: 15, periodSeconds: 20 }
+          envFrom:
+            - configMapRef: { name: vehicle-sales-config }
+            - secretRef: { name: vehicle-sales-secret }

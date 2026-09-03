@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: vehicle-sales-config
+  namespace: vehicle-platform
+data:
+  PORT: "3002"
+  CATALOG_SERVICE_URL: http://vehicle-catalog-service
