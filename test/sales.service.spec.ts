@@ -1,5 +1,6 @@
 import { ConflictException, NotFoundException } from '@nestjs/common';
 import { SalesService } from '../src/sales.service';
+import { PaymentUpdateStatus } from '../src/sales.dto';
 
 function prismaMock() { return { sale: { create: jest.fn(), findMany: jest.fn(), update: jest.fn() } }; }
 const vehicle = { id: 'v1', brand: 'Ford', model: 'Ka', year: 2020, color: 'Preto', price: 50000, status: 'FOR_SALE', paymentCode: 'pay-1' };
@@ -40,6 +41,6 @@ describe('SalesService', () => {
   });
   it('updates the local payment status', async () => {
     const prisma = prismaMock(); prisma.sale.update.mockResolvedValue({ paymentStatus: 'PAID' });
-    await expect(new SalesService(prisma as never).updatePayment({ paymentCode: 'pay-1', status: 'PAID' })).resolves.toEqual({ paymentStatus: 'PAID' });
+    await expect(new SalesService(prisma as never).updatePayment({ paymentCode: 'pay-1', status: PaymentUpdateStatus.PAID })).resolves.toEqual({ paymentStatus: 'PAID' });
   });
 });

@@ -1,7 +1,7 @@
 import { ConflictException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 import { PrismaService } from './prisma.service';
-import { CreateSaleDto, PaymentUpdateDto } from './sales.dto';
+import { CreateSaleDto, PaymentUpdateDto, PaymentUpdateStatus } from './sales.dto';
 
 type CatalogVehicle = { id: string; brand: string; model: string; year: number; color: string; price: number; status: string; paymentCode: string };
 
